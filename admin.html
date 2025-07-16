@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração - Biblioteca Digital</title>
+    <link rel="stylesheet" href="admin-style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>🔧 Administração - Biblioteca Digital</h1>
+            </div>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Voltar à Biblioteca</a>
+                <button id="logout-btn" class="btn btn-secondary">Sair</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Login Screen -->
+    <div class="login-screen" id="login-screen">
+        <div class="login-container">
+            <div class="login-card">
+                <h2>🔐 Acesso Administrativo</h2>
+                <p>Digite a senha para acessar o painel administrativo</p>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="admin-password">Senha de Administrador</label>
+                        <input type="password" id="admin-password" placeholder="Digite a senha" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Entrar</button>
+                </form>
+                <div class="login-hint">
+                    <small>💡 Dica: A senha padrão é "admin123"</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="admin-panel" style="display: none;">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>📋 Menu Administrativo</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="sidebar-link active" data-section="dashboard">
+                    📊 Dashboard
+                </a>
+                <a href="#add-book" class="sidebar-link" data-section="add-book">
+                    📚 Cadastrar Livro
+                </a>
+                <a href="#manage-books" class="sidebar-link" data-section="manage-books">
+                    📖 Gerenciar Livros
+                </a>
+                <a href="#reservations" class="sidebar-link" data-section="reservations">
+                    📋 Reservas
+                </a>
+                <a href="#manage-banner" class="sidebar-link" data-section="manage-banner">
+                    🎯 Gerenciar Banner
+                </a>
+                <a href="#manage-categories" class="sidebar-link" data-section="manage-categories">
+                    🏷️ Gerenciar Categorias
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section id="dashboard-section" class="content-section active">
+                <div class="section-header">
+                    <h2>📊 Dashboard</h2>
+                    <p>Visão geral da biblioteca</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📚</div>
+                        <div class="stat-info">
+                            <h3 id="total-books">0</h3>
+                            <p>Total de Livros</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📖</div>
+                        <div class="stat-info">
+                            <h3 id="borrowed-books">0</h3>
+                            <p>Livros Emprestados</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⏰</div>
+                        <div class="stat-info">
+                            <h3 id="pending-returns">0</h3>
+                            <p>Devoluções Pendentes</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📋</div>
+                        <div class="stat-info">
+                            <h3 id="total-reservations">0</h3>
+                            <p>Total de Reservas</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recent-activity">
+                    <h3>📈 Atividade Recente</h3>
+                    <div class="activity-list" id="activity-list">
+                        <p class="no-activity">Nenhuma atividade recente</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Add Book Section -->
+            <section id="add-book-section" class="content-section">
+                <div class="section-header">
+                    <h2>📚 Cadastrar Novo Livro</h2>
+                    <p>Adicione um novo livro ao acervo da biblioteca</p>
+                </div>
+
+                <div class="form-container">
+                    <form id="add-book-form" class="book-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="book-title">Título do Livro *</label>
+                                <input type="text" id="book-title" name="title" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="book-author">Autor *</label>
+                                <input type="text" id="book-author" name="author" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="book-category">Categoria/Gênero *</label>
+                                <select id="book-category" name="category" required>
+                                    <option value="">Selecione uma categoria</option>
+                                    <option value="Ficção">Ficção</option>
+                                    <option value="Fantasia">Fantasia</option>
+                                    <option value="Romance">Romance</option>
+                                    <option value="Mistério">Mistério</option>
+                                    <option value="Biografia">Biografia</option>
+                                    <option value="História">História</option>
+                                    <option value="Ciência">Ciência</option>
+                                    <option value="Autoajuda">Autoajuda</option>
+                                </select>
+                            </div>
+                        <div class="form-group">
+                            <label for="book-copies">Quantidade de Exemplares *</label>
+                            <input type="number" id="book-copies" name="copies" min="1" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="return-period">Prazo Máximo de Devolução (dias) *</label>
+                            <input type="number" id="return-period" name="returnPeriod" value="30" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="book-cover">Imagem da Capa</label>
+                            <input type="file" id="book-cover" name="cover" accept="image/*" max-size="104857600">
+                            <small>Formatos aceitos: JPG, PNG, GIF (máx. 100MB)</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="book-synopsis">Sinopse do Livro *</label>
+                        <textarea id="book-synopsis" name="synopsis" rows="5" required placeholder="Descreva a sinopse do livro..."></textarea>
+                    </div>
+
+                        <div class="form-actions">
+                            <button type="reset" class="btn btn-secondary">Limpar Formulário</button>
+                            <button type="submit" class="btn btn-primary">Cadastrar Livro</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Manage Books Section -->
+            <section id="manage-books-section" class="content-section">
+                <div class="section-header">
+                    <h2>📖 Gerenciar Livros</h2>
+                    <p>Edite ou remova livros do acervo</p>
+                </div>
+
+                <div class="search-bar">
+                    <input type="text" id="manage-search" placeholder="Buscar livros por título ou autor...">
+                    <button id="manage-search-btn" class="btn btn-secondary">Buscar</button>
+                </div>
+
+                <div class="books-table-container">
+                    <table class="books-table" id="books-table">
+                        <thead>
+                            <tr>
+                                <th>Capa</th>
+                                <th>Título</th>
+                                <th>Autor</th>
+                                <th>Categoria</th>
+                                <th>Exemplares</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="books-table-body">
+                            <!-- Livros serão carregados dinamicamente -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="no-books" id="no-books-message" style="display: none;">
+                    <h3>📭 Nenhum livro encontrado</h3>
+                    <p>Não há livros cadastrados ou nenhum livro corresponde à sua busca.</p>
+                </div>
+            </section>
+
+            <!-- Reservations Section -->
+            <section id="reservations-section" class="content-section">
+                <div class="section-header">
+                    <h2>📋 Gerenciar Reservas</h2>
+                    <p>Visualize e gerencie as reservas de livros</p>
+                </div>
+
+                <div class="reservations-container">
+                    <div class="reservations-list" id="reservations-list">
+                        <!-- Reservas serão carregadas dinamicamente -->
+                    </div>
+                </div>
+
+                <div class="no-reservations" id="no-reservations-message" style="display: none;">
+                    <h3>📭 Nenhuma reserva encontrada</h3>
+                    <p>Não há reservas pendentes no momento.</p>
+                </div>
+            </section>
+
+            <!-- Manage Banner Section -->
+            <section id="manage-banner-section" class="content-section">
+                <div class="section-header">
+                    <h2>🎯 Gerenciar Banner do Livro do Mês</h2>
+                    <p>Selecione qual livro será destacado no banner principal</p>
+                </div>
+
+                <div class="current-banner-info">
+                    <h3>📖 Livro Atual em Destaque</h3>
+                    <div class="current-banner-display" id="current-banner-display">
+                        <div class="banner-book-info">
+                            <img id="current-banner-cover" src="" alt="Capa do livro em destaque" class="banner-cover-preview" />
+                            <div class="banner-details">
+                                <h4 id="current-banner-title">Nenhum livro selecionado</h4>
+                                <p id="current-banner-author">-</p>
+                                <p id="current-banner-category">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="banner-selection">
+                    <h3>📚 Selecionar Novo Livro para Destaque</h3>
+                    <div class="books-selection-grid" id="books-selection-grid">
+                        <!-- Livros serão carregados dinamicamente -->
+                    </div>
+                    
+                    <div class="no-books-banner" id="no-books-banner" style="display: none;">
+                        <h4>📭 Nenhum livro disponível</h4>
+                        <p>Cadastre livros primeiro para poder selecioná-los como destaque.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Manage Categories Section -->
+            <section id="manage-categories-section" class="content-section">
+                <div class="section-header">
+                    <h2>🏷️ Gerenciar Categorias</h2>
+                    <p>Adicione, edite ou remova categorias de livros</p>
+                </div>
+
+                <div class="form-container">
+                    <form id="add-category-form" class="category-form">
+                        <div class="form-group">
+                            <label for="new-category-name">Nome da Nova Categoria *</label>
+                            <input type="text" id="new-category-name" name="categoryName" required placeholder="Ex: Ficção Científica">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Adicionar Categoria</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="categories-list-container">
+                    <h3>Categorias Existentes</h3>
+                    <ul id="categories-list" class="categories-list">
+                        <!-- Categorias serão carregadas dinamicamente -->
+                    </ul>
+                    <div class="no-categories" id="no-categories-message" style="display: none;">
+                        <p>Nenhuma categoria cadastrada.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal para Editar Livro -->
+    <div class="modal" id="edit-book-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>✏️ Editar Livro</h3>
+                <button class="modal-close" id="close-edit-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-book-form" class="book-form">
+                    <input type="hidden" id="edit-book-id" name="id">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="edit-book-title">Título do Livro *</label>
+                            <input type="text" id="edit-book-title" name="title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-book-author">Autor *</label>
+                            <input type="text" id="edit-book-author" name="author" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="edit-book-category">Categoria/Gênero *</label>
+                            <select id="edit-book-category" name="category" required>
+                                <option value="">Selecione uma categoria</option>
+                                <option value="Ficção">Ficção</option>
+                                <option value="Fantasia">Fantasia</option>
+                                <option value="Romance">Romance</option>
+                                <option value="Mistério">Mistério</option>
+                                <option value="Biografia">Biografia</option>
+                                <option value="História">História</option>
+                                <option value="Ciência">Ciência</option>
+                                <option value="Autoajuda">Autoajuda</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-book-copies">Quantidade de Exemplares *</label>
+                            <input type="number" id="edit-book-copies" name="copies" min="1" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-return-period">Prazo Máximo de Devolução (dias) *</label>
+                        <input type="number" id="edit-return-period" name="returnPeriod" min="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-book-synopsis">Sinopse do Livro *</label>
+                        <textarea id="edit-book-synopsis" name="synopsis" rows="5" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-book-cover">Alterar Imagem da Capa</label>
+                        <input type="file" id="edit-book-cover" name="cover" accept="image/*" max-size="104857600">
+                        <small>Formatos aceitos: JPG, PNG, GIF (máx. 100MB). Deixe em branco para manter a capa atual.</small>
+                        <div id="current-edit-book-cover-preview"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-edit">Cancelar</button>
+                <button class="btn btn-primary" id="save-edit">Salvar Alterações</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação -->
+    <div class="modal" id="confirm-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>⚠️ Confirmação</h3>
+                <button class="modal-close" id="close-confirm-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="confirm-message">Tem certeza que deseja realizar esta ação?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-confirm">Cancelar</button>
+                <button class="btn btn-danger" id="confirm-action">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html>
+
+

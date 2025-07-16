@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Digital - Colaborador FM</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>📚 Biblioteca Digital</h1>
+            </div>
+            <nav class="nav">
+                <a href="index.html" class="nav-link active">Biblioteca</a>
+                <a href="admin.html" class="nav-link">Administração</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Banner Destaque do Mês -->
+    <section class="hero-banner">
+        <div class="container">
+            <div class="banner-content">
+                <div class="banner-text">
+                    <h2>📖 Destaque do Mês</h2>
+                    <h3 id="featured-book-title">Carregando...</h3>
+                    <p id="featured-book-author">Carregando...</p>
+                    <p id="featured-book-description">Carregando...</p>
+                    <button class="btn btn-primary" id="featured-book-btn">Ver Detalhes</button>
+                </div>
+                <div class="banner-image">
+                    <img id="featured-book-cover" src="" alt="Livro em destaque" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        
+        <div class="container">
+            <div class="content-wrapper">
+                <!-- Sidebar com Filtros -->
+                <aside class="sidebar">
+                    <div class="filter-section">
+                        <h3>🔍 Buscar Livros</h3>
+                        <div class="search-box">
+                            <input type="text" id="search-input" placeholder="Buscar por título, autor ou gênero..." />
+                            <button id="search-btn" class="btn btn-secondary">Buscar</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-section">
+                        <h3>📂 Filtrar por Categoria</h3>
+                        <div class="category-filters" id="category-filters">
+                            <label class="filter-option">
+                                <input type="radio" name="category" value="all" checked>
+                                <span>Todas as Categorias</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="category" value="Ficção">
+                                <span>Ficção</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="category" value="Fantasia">
+                                <span>Fantasia</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="category" value="Romance">
+                                <span>Romance</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="category" value="Mistério">
+                                <span>Mistério</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="category" value="Biografia">
+                                <span>Biografia</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="category" value="História">
+                                <span>História</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="category" value="Ciência">
+                                <span>Ciência</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="radio" name="category" value="Autoajuda">
+                                <span>Autoajuda</span>
+                            </label>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Lista de Livros -->
+                <section class="books-section">
+                    <div class="section-header">
+                        <h2>📚 Acervo da Biblioteca</h2>
+                        <div class="results-info">
+                            <span id="results-count">Carregando livros...</span>
+                        </div>
+                    </div>
+
+                    <div class="books-grid" id="books-grid">
+                        <!-- Os livros serão carregados dinamicamente via JavaScript -->
+                    </div>
+
+                    <!-- Mensagem quando não há resultados -->
+                    <div class="no-results" id="no-results" style="display: none;">
+                        <h3>📭 Nenhum livro encontrado</h3>
+                        <p>Tente ajustar os filtros ou termos de busca.</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal para Sinopse -->
+    <div class="modal" id="synopsis-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-book-title">Título do Livro</h3>
+                <button class="modal-close" id="close-synopsis-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-book-info">
+                    <img id="modal-book-cover" src="" alt="Capa do livro" />
+                    <div class="book-details">
+                        <p><strong>Autor:</strong> <span id="modal-book-author"></span></p>
+                        <p><strong>Categoria:</strong> <span id="modal-book-category"></span></p>
+                        <p><strong>Exemplares disponíveis:</strong> <span id="modal-book-copies"></span></p>
+                    </div>
+                </div>
+                <div class="synopsis-content">
+                    <h4>📖 Sinopse</h4>
+                    <p id="modal-book-synopsis"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="close-synopsis-btn">Fechar</button>
+                <button class="btn btn-primary" id="reserve-from-modal">Reservar Livro</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Reserva -->
+    <div class="modal" id="reservation-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📋 Reservar Livro</h3>
+                <button class="modal-close" id="close-reservation-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="reservation-book-info">
+                    <img id="reservation-book-cover" src="" alt="Capa do livro" />
+                    <div>
+                        <h4 id="reservation-book-title">Título do Livro</h4>
+                        <p id="reservation-book-author">Autor</p>
+                    </div>
+                </div>
+                
+                <form id="reservation-form" class="reservation-form">
+                    <div class="form-group">
+                        <label for="requester-name">Nome do Solicitante *</label>
+                        <input type="text" id="requester-name" name="requesterName" required />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="requester-sector">Setor em que trabalha *</label>
+                        <input type="text" id="requester-sector" name="requesterSector" required />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="requester-phone">Telefone *</label>
+                        <input type="tel" id="requester-phone" name="requesterPhone" required />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="observations">Observações</label>
+                        <textarea id="observations" name="observations" rows="3" placeholder="Observações adicionais (opcional)"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-reservation">Cancelar</button>
+                <button class="btn btn-primary" id="submit-reservation">Enviar Reserva</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Biblioteca Digital - Colaborador FM. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+    <!-- Modern Alert/Confirm Modals -->
+    <div id="modern-alert" class="modern-alert" style="display: none;">
+        <div class="modern-alert-content">
+            <span id="modern-alert-icon"></span>
+            <span id="modern-alert-message"></span>
+            <button class="modern-alert-close" onclick="this.parentElement.parentElement.style.display=\'none\'">&times;</button>
+        </div>
+    </div>
+
+    <div id="modern-confirm" class="modern-confirm" style="display: none;">
+        <div class="modern-confirm-overlay"></div>
+        <div class="modern-confirm-content">
+            <div class="modern-confirm-header">
+                <span class="modern-confirm-icon">⚠️</span>
+                <h3>Confirmação</h3>
+            </div>
+            <div class="modern-confirm-body">
+                <p id="confirm-message">Tem certeza que deseja realizar esta ação?</p>
+            </div>
+            <div class="modern-confirm-footer">
+                <button class="btn btn-secondary modern-confirm-cancel">Cancelar</button>
+                <button class="btn btn-primary modern-confirm-ok">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
